@@ -23,7 +23,7 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
       - name: Fetch ORG branch
-        run: git fetch origin ORG:ORG
+        run: git fetch origin ORG
 
       - name: Merge ORG into main
         id: merge
