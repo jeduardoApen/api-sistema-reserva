@@ -52,11 +52,11 @@ jobs:
           fi
 
       - name: Push changes
-        if: env.MERGE_SUCCESS == 'true'
+        if: env.MERGE_STATUS == 'success'
         run: git push origin main
 
       - name: Cancel on merge conflict
-        if: env.MERGE_SUCCESS == 'false'
+        if: env.MERGE_STATUS == 'failed'
         run: |
           echo "::error ::Merge conflict detected. Manual resolution required."
           exit 1
