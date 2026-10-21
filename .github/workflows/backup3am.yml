@@ -32,6 +32,9 @@ jobs:
           if git merge --no-ff origin/ORG -m "Auto-merge ORG into main"; then
             echo "MERGE_SUCCESS=true" >> $GITHUB_ENV
           else
+          echo "::warning ::Falló el merge automático. Mostrando estado de Git:"
+            git status
+            git merge --abort || true
             echo "MERGE_SUCCESS=false" >> $GITHUB_ENV
           fi
 
