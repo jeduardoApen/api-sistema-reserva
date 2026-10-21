@@ -33,15 +33,20 @@ jobs:
         run: |
           set +e
           git checkout main
-          git merge --no-ff origin/ORG -m "Auto-merge ORG into main"
+          MERGE_OUTPUT=$(git merge --no-ff origin/ORG -m "Auto-merge ORG into main" 2>&1)
           EXIT_CODE=$?
           
+          echo "$MERGE_OUTPUT"
+          
           if [ $EXIT_CODE -eq 0 ]; then
-            echo "MERGE_SUCCESS=true" >> $GITHUB_ENV
-            echo "Merge completado con éxito."
+            echo "MERGE_STATUS=success" >> $GITHUB_ENV
+            echo "Merge realizado correctamente."
+          elif echo "$MERGE_OUTPUT" | grep -q "Already up to date"; then
+            echo "MERGE_STATUS=up_to_date" >> $GITHUB_ENV
+            echo "Las ramas ya están sincronizadas. No se requiere push."
           else
-            echo "MERGE_SUCCESS=false" >> $GITHUB_ENV
-            echo "::warning ::Falló el merge automático. Mostrando estado de Git:"
+            echo "MERGE_STATUS=failed" >> $GITHUB_ENV
+            echo "::warning ::Falló el merge automático."
             git status
             git merge --abort || true
           fi
