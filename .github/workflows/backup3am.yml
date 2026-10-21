@@ -25,11 +25,11 @@ jobs:
       - name: Fetch ORG branch
         run: git fetch origin ORG:ORG
 
-      - name: Merge org into main
+      - name: Merge ORG into main
         id: merge
         run: |
           git checkout main
-          if git merge --no-ff origin/org -m "Auto-merge org into main"; then
+          if git merge --no-ff origin/ORG -m "Auto-merge ORG into main"; then
             echo "MERGE_SUCCESS=true" >> $GITHUB_ENV
           else
             echo "MERGE_SUCCESS=false" >> $GITHUB_ENV
