@@ -28,7 +28,7 @@ jobs:
           TOKEN: ${{ secrets.GITHUB_TOKEN }}
           REPO: ${{ github.repository }}
         run: |
-          ORIGEN="org"
+          ORIGEN="ORG"
           RAMAS_DESTINO=("RAMA_DIEGO" "RAMA_EDUARDO")
 
           for DESTINO in "${RAMAS_DESTINO[@]}"; do
