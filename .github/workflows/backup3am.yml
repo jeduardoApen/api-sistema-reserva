@@ -5,6 +5,9 @@ on:
     - cron: '0 9 * * *' # 3am
   workflow_dispatch:
 
+  permissions:
+  contents: write
+
 jobs:
   auto-merge:
     name: Merge PreProduccion -> main
