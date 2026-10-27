@@ -20,6 +20,7 @@ import reservaRoutes from './reserva.routes.js';
 import usuarioRoutes from './usuario.routes.js';
 import dashboardRoutes from './dashboard.routes.js';
 import tipoEspacioRoutes from './tipoEspacio.routes.js';
+import estadoReservaRoutes from './estadoReserva.routes.js';
 
 const router = Router();
 
@@ -51,5 +52,6 @@ router.use('/reservas', reservaRoutes);
 router.use('/usuarios', usuarioRoutes);
 router.use('/dashboard', dashboardRoutes);
 router.use('/tipos-espacio', tipoEspacioRoutes);
+router.use('/estados-reserva', estadoReservaRoutes);
 
 export default router;
