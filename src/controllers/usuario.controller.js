@@ -1,15 +1,24 @@
 /**
- * Propósito: Controlador de usuarios; administrará la comunicación HTTP del recurso
- *           "usuarios" (req/res) delegando la lógica al Service.
+ * Propósito: Controller de usuarios. Administra la comunicación HTTP (req/res)
+ *           y delega la lógica al Service.
  *
- * @warning Aún no implementado. No debe contener SQL ni reglas de negocio.
- * @note Por ahora no se implementará autenticación.
+ * @warning No incluye SQL ni reglas de negocio.
  *
  * @example
- * // Uso futuro en usuario.routes.js:
- * // import { listarUsuarios } from '../controllers/usuario.controller.js';
+ * // Se usa en usuario.routes.js: router.get('/obtener-usuarios', obtenerUsuarios);
  *
- * Código Nativo/Framework: Express.js - gestionará req/res para el recurso usuarios.
+ * Código Nativo/Framework: Express.js - res.json() para responder al cliente.
  */
-// TODO: Implementar controladores de usuarios.
-export default {};
+import usuarioService from '../services/usuario.service.js';
+
+/**
+ * GET /api/usuarios/obtener-usuarios
+ * Responde con la lista de usuarios (opcional: ?activo=1).
+ */
+const obtenerUsuarios = async (req, res) => {
+  const { activo } = req.query;
+  const usuarios = await usuarioService.obtenerUsuarios(activo);
+  res.json({ success: true, data: usuarios });
+};
+
+export default { obtenerUsuarios };

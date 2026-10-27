@@ -28,6 +28,23 @@ const obtenerPorCorreo = async (correo) => {
   return rows[0];
 };
 
-// TODO: Implementar el CRUD completo de usuarios (listar, crear, actualizar, eliminar).
+/**
+ * Obtiene los usuarios, opcionalmente solo los activos.
+ *
+ * @param {boolean} [soloActivos=false] - Si es true, filtra activo = 1.
+ * @returns {Promise<Array<Object>>} Lista de usuarios (sin password).
+ */
+const obtenerTodos = async (soloActivos = false) => {
+  const sql = `
+    SELECT id, nombre, apellido, correo, telefono, activo, created_at, updated_at
+    FROM usuarios
+    ${soloActivos ? 'WHERE activo = 1' : ''}
+    ORDER BY id
+  `;
+  const [rows] = await pool.execute(sql);
+  return rows;
+};
 
-export default { obtenerPorCorreo };
+// TODO: Implementar crear, actualizar y eliminar usuarios.
+
+export default { obtenerPorCorreo, obtenerTodos };

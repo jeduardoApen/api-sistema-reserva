@@ -1,14 +1,26 @@
 /**
- * Propósito: Service de usuarios; contendrá las reglas de negocio del recurso
- *           "usuarios" y usará el Repository para acceder a los datos.
+ * Propósito: Service de usuarios. Contiene las reglas de negocio del recurso
+ *           y usa el Repository para acceder a los datos.
  *
- * @warning Aún no implementado. No debe contener consultas SQL directamente.
- * @note Por ahora no se implementará autenticación.
+ * @warning No ejecutes consultas SQL aquí; delega el acceso a datos al Repository.
  *
  * @example
- * // Uso futuro: import { listarUsuarios } from '../services/usuario.service.js';
+ * import usuarioService from '../services/usuario.service.js';
+ * const usuarios = await usuarioService.obtenerUsuarios();
  *
  * Código Nativo: Node.js - funciones de negocio que orquestan al Repository.
  */
-// TODO: Implementar reglas de negocio de usuarios.
-export default {};
+import usuarioRepository from '../repositories/usuario.repository.js';
+
+/**
+ * Lista los usuarios, opcionalmente solo los activos.
+ *
+ * @param {string} [activo] - Query param "1" para filtrar solo usuarios activos.
+ * @returns {Promise<Array<Object>>} Lista de usuarios (sin password).
+ */
+const obtenerUsuarios = async (activo) => {
+  const soloActivos = activo === '1';
+  return usuarioRepository.obtenerTodos(soloActivos);
+};
+
+export default { obtenerUsuarios };
