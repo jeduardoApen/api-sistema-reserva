@@ -89,4 +89,18 @@ const eliminar = async (id) => {
   return result.affectedRows;
 };
 
-export default { obtenerTodos, obtenerPorId, crear, actualizar, eliminar };
+/**
+ * Desactiva lógicamente un tipo de espacio (activo = 0).
+ *
+ * @param {number} id - Identificador del tipo de espacio.
+ * @returns {Promise<number>} Número de filas afectadas.
+ */
+const desactivar = async (id) => {
+  const [result] = await pool.execute(
+    `UPDATE tipos_espacio SET activo = 0, updated_at = NOW() WHERE id = ?`,
+    [id],
+  );
+  return result.affectedRows;
+};
+
+export default { obtenerTodos, obtenerPorId, crear, actualizar, eliminar, desactivar };

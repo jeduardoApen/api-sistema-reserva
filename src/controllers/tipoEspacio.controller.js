@@ -59,4 +59,14 @@ const eliminarTipo = async (req, res) => {
   res.json({ success: true, message: 'Tipo de espacio eliminado correctamente' });
 };
 
-export default { obtenerTipos, obtenerTipo, crearTipo, actualizarTipo, eliminarTipo };
+/**
+ * POST /api/tipos-espacio/desactivar-tipo/:id
+ * Desactiva lógicamente un tipo de espacio (activo = 0).
+ */
+const desactivarTipo = async (req, res) => {
+  const id = Number(req.params.id);
+  await tipoEspacioService.desactivarTipo(id);
+  res.json({ success: true, message: 'Tipo de espacio desactivado correctamente' });
+};
+
+export default { obtenerTipos, obtenerTipo, crearTipo, actualizarTipo, eliminarTipo, desactivarTipo };

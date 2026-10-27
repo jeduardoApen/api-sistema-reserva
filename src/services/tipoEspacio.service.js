@@ -119,4 +119,25 @@ const eliminarTipo = async (id) => {
   await tipoEspacioRepository.eliminar(id);
 };
 
-export default { obtenerTipos, obtenerTipo, crearTipo, actualizarTipo, eliminarTipo };
+/**
+ * Desactiva lógicamente un tipo de espacio (activo = 0), validando que exista.
+ *
+ * @param {number} id - Identificador del tipo de espacio.
+ * @returns {Promise<void>}
+ * @throws {ApiError} 400 si el id no es válido, 404 si no existe.
+ */
+const desactivarTipo = async (id) => {
+  if (!Number.isInteger(id) || id <= 0) {
+    throw new ApiError(400, "El id debe ser un número entero positivo");
+  }
+
+  const tipo = await tipoEspacioRepository.obtenerPorId(id);
+
+  if (!tipo) {
+    throw new ApiError(404, "Tipo de espacio no encontrado");
+  }
+
+  await tipoEspacioRepository.desactivar(id);
+};
+
+export default { obtenerTipos, obtenerTipo, crearTipo, actualizarTipo, eliminarTipo, desactivarTipo };
