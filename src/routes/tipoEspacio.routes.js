@@ -14,5 +14,6 @@ import tipoEspacioController from '../controllers/tipoEspacio.controller.js';
 const router = Router();
 
 router.get('/obtener-tipos', tipoEspacioController.obtenerTipos);
+router.get('/obtener-tipo/:id', tipoEspacioController.obtenerTipo);
 
 export default router;

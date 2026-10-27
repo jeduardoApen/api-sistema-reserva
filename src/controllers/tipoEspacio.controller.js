@@ -16,8 +16,18 @@ import tipoEspacioService from '../services/tipoEspacio.service.js';
  * Responde con la lista completa de tipos de espacio.
  */
 const obtenerTipos = async (req, res) => {
-  const tipos = await tipoEspacioService.listarTipos();
+  const tipos = await tipoEspacioService.obtenerTipos();
   res.json({ success: true, data: tipos });
 };
 
-export default { obtenerTipos };
+/**
+ * GET /api/tipos-espacio/obtener-tipo/:id
+ * Responde con un tipo de espacio según su id.
+ */
+const obtenerTipo = async (req, res) => {
+  const id = Number(req.params.id);
+  const tipo = await tipoEspacioService.obtenerTipo(id);
+  res.json({ success: true, data: tipo });
+};
+
+export default { obtenerTipos, obtenerTipo };

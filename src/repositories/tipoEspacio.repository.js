@@ -7,7 +7,7 @@
  *
  * @example
  * import tipoEspacioRepository from '../repositories/tipoEspacio.repository.js';
- * const tipos = await tipoEspacioRepository.findAll();
+ * const tipos = await tipoEspacioRepository.obtenerTodos();
  *
  * Código Nativo/Framework: Node.js + mysql2/promise - pool.execute() sobre la tabla tipos_espacio.
  */
@@ -18,7 +18,7 @@ import pool from '../config/database.js';
  *
  * @returns {Promise<Array<Object>>} Lista de tipos de espacio.
  */
-const findAll = async () => {
+const obtenerTodos = async () => {
   const [rows] = await pool.execute(
     `SELECT id, nombre, descripcion, activo, created_at, updated_at
      FROM tipos_espacio
@@ -27,4 +27,20 @@ const findAll = async () => {
   return rows;
 };
 
-export default { findAll };
+/**
+ * Obtiene un tipo de espacio por su id.
+ *
+ * @param {number} id - Identificador del tipo de espacio.
+ * @returns {Promise<Object|undefined>} Tipo de espacio encontrado o undefined si no existe.
+ */
+const obtenerPorId = async (id) => {
+  const [rows] = await pool.execute(
+    `SELECT id, nombre, descripcion, activo, created_at, updated_at
+     FROM tipos_espacio
+     WHERE id = ?`,
+    [id],
+  );
+  return rows[0];
+};
+
+export default { obtenerTodos, obtenerPorId };
