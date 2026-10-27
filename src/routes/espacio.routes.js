@@ -1,23 +1,25 @@
 /**
- * Propósito: Rutas del recurso "espacios"; define los endpoints HTTP y delega las
- *           solicitudes a los Controllers.
+ * Propósito: Rutas del recurso espacios. Define los endpoints y delega a los Controllers.
  *
- * @warning Aún no implementado. No debe contener lógica de negocio ni consultas SQL.
+ * @warning No incluye lógica de negocio ni SQL.
+ * @note La ruta /obtener-disponibles se registra antes de las rutas con :id por claridad.
  *
  * @example
- * // Uso futuro:
- * // GET    /api/espacios
- * // GET    /api/espacios/:id
- * // POST   /api/espacios
- * // PUT    /api/espacios/:id
- * // DELETE /api/espacios/:id
+ * // GET /api/espacios/obtener-espacios
  *
- * Código Nativo/Framework: Express.js - Router que agrupa las rutas del recurso espacios.
+ * Código Nativo/Framework: Express.js - Router montado bajo /api/espacios.
  */
 import { Router } from 'express';
+import espacioController from '../controllers/espacio.controller.js';
 
 const router = Router();
 
-// TODO: Definir endpoints CRUD de espacios.
+router.get('/obtener-disponibles', espacioController.obtenerDisponibles);
+router.get('/obtener-espacios', espacioController.obtenerEspacios);
+router.get('/obtener-espacio/:id', espacioController.obtenerEspacio);
+router.post('/crear-espacio', espacioController.crearEspacio);
+router.put('/actualizar-espacio/:id', espacioController.actualizarEspacio);
+router.delete('/eliminar-espacio/:id', espacioController.eliminarEspacio);
+router.post('/desactivar-espacio/:id', espacioController.desactivarEspacio);
 
 export default router;
