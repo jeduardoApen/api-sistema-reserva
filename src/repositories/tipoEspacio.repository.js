@@ -58,4 +58,35 @@ const crear = async ({ nombre, descripcion }) => {
   return result.insertId;
 };
 
-export default { obtenerTodos, obtenerPorId, crear };
+/**
+ * Actualiza el nombre y la descripción de un tipo de espacio.
+ *
+ * @param {number} id - Identificador del tipo de espacio.
+ * @param {Object} datos - Objeto con { nombre, descripcion }.
+ * @returns {Promise<number>} Número de filas afectadas.
+ */
+const actualizar = async (id, { nombre, descripcion }) => {
+  const [result] = await pool.execute(
+    `UPDATE tipos_espacio
+     SET nombre = ?, descripcion = ?, updated_at = NOW()
+     WHERE id = ?`,
+    [nombre, descripcion, id],
+  );
+  return result.affectedRows;
+};
+
+/**
+ * Elimina físicamente un tipo de espacio.
+ *
+ * @param {number} id - Identificador del tipo de espacio.
+ * @returns {Promise<number>} Número de filas afectadas.
+ */
+const eliminar = async (id) => {
+  const [result] = await pool.execute(
+    `DELETE FROM tipos_espacio WHERE id = ?`,
+    [id],
+  );
+  return result.affectedRows;
+};
+
+export default { obtenerTodos, obtenerPorId, crear, actualizar, eliminar };

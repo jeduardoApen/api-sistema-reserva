@@ -39,4 +39,24 @@ const crearTipo = async (req, res) => {
   res.status(201).json({ success: true, data: tipo });
 };
 
-export default { obtenerTipos, obtenerTipo, crearTipo };
+/**
+ * PUT /api/tipos-espacio/actualizar-tipo/:id
+ * Actualiza un tipo de espacio a partir del body.
+ */
+const actualizarTipo = async (req, res) => {
+  const id = Number(req.params.id);
+  const tipo = await tipoEspacioService.actualizarTipo(id, req.body);
+  res.json({ success: true, data: tipo });
+};
+
+/**
+ * DELETE /api/tipos-espacio/eliminar-tipo/:id
+ * Elimina físicamente un tipo de espacio.
+ */
+const eliminarTipo = async (req, res) => {
+  const id = Number(req.params.id);
+  await tipoEspacioService.eliminarTipo(id);
+  res.json({ success: true, message: 'Tipo de espacio eliminado correctamente' });
+};
+
+export default { obtenerTipos, obtenerTipo, crearTipo, actualizarTipo, eliminarTipo };
