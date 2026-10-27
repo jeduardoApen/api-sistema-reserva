@@ -1,15 +1,33 @@
 /**
- * Propósito: Repository de usuarios; será responsable del acceso a MySQL para el
- *           recurso "usuarios" (SELECT, INSERT, UPDATE, DELETE).
+ * Propósito: Repository de usuarios. Accede a MySQL (tabla `usuarios`) mediante el pool.
  *
- * @warning Aún no implementado. No debe ejecutarse ninguna consulta SQL todavía.
- * @note Usará el pool de conexiones de src/config/database.js.
+ * @warning No ejecutes lógica de negocio aquí; este módulo solo accede a datos.
+ * @note Todas las consultas usan consultas parametrizadas (pool.execute) para evitar SQL injection.
  *
  * @example
- * // Métodos futuros: findAll(), findById(), create(), update(), remove()
+ * import usuarioRepository from '../repositories/usuario.repository.js';
+ * const usuario = await usuarioRepository.obtenerPorCorreo('admin@test.com');
  *
- * Código Nativo/Framework: Node.js + mysql2/promise - ejecutará consultas
- * parametrizadas mediante pool.execute().
+ * Código Nativo/Framework: Node.js + mysql2/promise - pool.execute() sobre la tabla usuarios.
  */
-// TODO: Implementar consultas SQL de usuarios.
-export default {};
+import pool from '../config/database.js';
+
+/**
+ * Obtiene un usuario por su correo (incluye el password para validar el login).
+ *
+ * @param {string} correo - Correo del usuario.
+ * @returns {Promise<Object|undefined>} Usuario encontrado o undefined.
+ */
+const obtenerPorCorreo = async (correo) => {
+  const [rows] = await pool.execute(
+    `SELECT id, nombre, apellido, correo, password, telefono, activo
+     FROM usuarios
+     WHERE correo = ?`,
+    [correo],
+  );
+  return rows[0];
+};
+
+// TODO: Implementar el CRUD completo de usuarios (listar, crear, actualizar, eliminar).
+
+export default { obtenerPorCorreo };
