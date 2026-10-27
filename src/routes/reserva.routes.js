@@ -1,23 +1,28 @@
 /**
- * Propósito: Rutas del recurso "reservas"; define los endpoints HTTP y delega las
- *           solicitudes a los Controllers.
+ * Propósito: Rutas del recurso reservas. Define los endpoints y delega a los Controllers.
  *
- * @warning Aún no implementado. No debe contener lógica de negocio ni consultas SQL.
+ * @warning No incluye lógica de negocio ni SQL.
  *
  * @example
- * // Uso futuro:
- * // GET    /api/reservas
- * // GET    /api/reservas/:id
- * // POST   /api/reservas
- * // PUT    /api/reservas/:id
- * // DELETE /api/reservas/:id
+ * // GET /api/reservas/obtener-reservas
  *
- * Código Nativo/Framework: Express.js - Router que agrupa las rutas del recurso reservas.
+ * Código Nativo/Framework: Express.js - Router montado bajo /api/reservas.
  */
 import { Router } from 'express';
+import reservaController from '../controllers/reserva.controller.js';
 
 const router = Router();
 
-// TODO: Definir endpoints CRUD de reservas.
+router.get('/obtener-reservas', reservaController.obtenerReservas);
+router.get('/obtener-reserva/:id', reservaController.obtenerReserva);
+router.post('/crear-reserva', reservaController.crearReserva);
+router.put('/actualizar-reserva/:id', reservaController.actualizarReserva);
+router.patch('/cambiar-estado/:id', reservaController.cambiarEstado);
+router.delete('/eliminar-reserva/:id', reservaController.eliminarReserva);
+
+router.get('/obtener-por-espacio', reservaController.obtenerPorEspacio);
+router.get('/obtener-por-rango', reservaController.obtenerPorRango);
+router.get('/obtener-por-estado/:estadoId', reservaController.obtenerPorEstado);
+router.get('/verificar-disponibilidad', reservaController.verificarDisponibilidad);
 
 export default router;
