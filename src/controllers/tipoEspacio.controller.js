@@ -30,4 +30,13 @@ const obtenerTipo = async (req, res) => {
   res.json({ success: true, data: tipo });
 };
 
-export default { obtenerTipos, obtenerTipo };
+/**
+ * POST /api/tipos-espacio/crear-tipo
+ * Crea un nuevo tipo de espacio a partir del body.
+ */
+const crearTipo = async (req, res) => {
+  const tipo = await tipoEspacioService.crearTipo(req.body);
+  res.status(201).json({ success: true, data: tipo });
+};
+
+export default { obtenerTipos, obtenerTipo, crearTipo };

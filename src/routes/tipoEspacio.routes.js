@@ -15,5 +15,6 @@ const router = Router();
 
 router.get('/obtener-tipos', tipoEspacioController.obtenerTipos);
 router.get('/obtener-tipo/:id', tipoEspacioController.obtenerTipo);
+router.post('/crear-tipo', tipoEspacioController.crearTipo);
 
 export default router;

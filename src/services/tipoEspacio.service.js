@@ -10,8 +10,8 @@
  *
  * Código Nativo: Node.js - funciones de negocio que orquestan al Repository.
  */
-import tipoEspacioRepository from '../repositories/tipoEspacio.repository.js';
-import ApiError from '../utils/ApiError.js';
+import tipoEspacioRepository from "../repositories/tipoEspacio.repository.js";
+import ApiError from "../utils/ApiError.js";
 
 /**
  * Lista todos los tipos de espacio.
@@ -31,16 +31,38 @@ const obtenerTipos = async () => {
  */
 const obtenerTipo = async (id) => {
   if (!Number.isInteger(id) || id <= 0) {
-    throw new ApiError(400, 'El id debe ser un número entero positivo');
+    throw new ApiError(400, "El id debe ser un número entero positivo");
   }
 
   const tipo = await tipoEspacioRepository.obtenerPorId(id);
 
   if (!tipo) {
-    throw new ApiError(404, 'Tipo de espacio no encontrado');
+    throw new ApiError(404, "Tipo de espacio no encontrado");
   }
 
   return tipo;
 };
 
-export default { obtenerTipos, obtenerTipo };
+/**
+ * Crea un tipo de espacio validando los datos de entrada.
+ *
+ * @param {Object} datos - Objeto con { nombre, descripcion }.
+ * @returns {Promise<Object>} Tipo de espacio creado.
+ * @throws {ApiError} 400 si el nombre falta.
+ */
+const crearTipo = async (datos) => {
+  const nombre = datos.nombre?.trim();
+
+  if (!nombre) {
+    throw new ApiError(400, "El nombre es obligatorio");
+  }
+
+  const id = await tipoEspacioRepository.crear({
+    nombre,
+    descripcion: datos.descripcion ?? null,
+  });
+
+  return tipoEspacioRepository.obtenerPorId(id);
+};
+
+export default { obtenerTipos, obtenerTipo, crearTipo };

@@ -11,7 +11,7 @@
  *
  * Código Nativo/Framework: Node.js + mysql2/promise - pool.execute() sobre la tabla tipos_espacio.
  */
-import pool from '../config/database.js';
+import pool from "../config/database.js";
 
 /**
  * Obtiene todos los tipos de espacio ordenados por nombre.
@@ -43,4 +43,19 @@ const obtenerPorId = async (id) => {
   return rows[0];
 };
 
-export default { obtenerTodos, obtenerPorId };
+/**
+ * Inserta un nuevo tipo de espacio.
+ *
+ * @param {Object} datos - Objeto con las propiedades { nombre, descripcion }.
+ * @returns {Promise<number>} id del tipo de espacio creado.
+ */
+const crear = async ({ nombre, descripcion }) => {
+  const [result] = await pool.execute(
+    `INSERT INTO tipos_espacio (nombre, descripcion, created_at, updated_at)
+     VALUES (?, ?, NOW(), NOW())`,
+    [nombre, descripcion],
+  );
+  return result.insertId;
+};
+
+export default { obtenerTodos, obtenerPorId, crear };
