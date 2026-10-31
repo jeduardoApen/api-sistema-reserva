@@ -31,6 +31,69 @@ Repository
 MySQL
 ```
 
+## Estructura de archivos
+
+```text
+sistema_reserva/
+├── .env
+├── .env.example
+├── .gitignore
+├── package.json
+├── package-lock.json
+├── README.md
+├── .github/
+│   └── workflows/
+│       ├── backup3am.yml
+│       └── replica2am.yml
+└── src/
+    ├── app.js
+    ├── server.js
+    ├── config/
+    │   └── database.js
+    ├── controllers/
+    │   ├── auth.controller.js
+    │   ├── dashboard.controller.js
+    │   ├── espacio.controller.js
+    │   ├── estadoReserva.controller.js
+    │   ├── reserva.controller.js
+    │   ├── tipoEspacio.controller.js
+    │   └── usuario.controller.js
+    ├── database/
+    │   ├── consultas-reserva-crud.sql
+    │   └── database-reserva-espacios-crud.sql
+    ├── middlewares/
+    │   ├── error.middleware.js
+    │   └── notFound.middleware.js
+    ├── repositories/
+    │   ├── dashboard.repository.js
+    │   ├── espacio.repository.js
+    │   ├── estadoReserva.repository.js
+    │   ├── reserva.repository.js
+    │   ├── tipoEspacio.repository.js
+    │   └── usuario.repository.js
+    ├── routes/
+    │   ├── auth.routes.js
+    │   ├── dashboard.routes.js
+    │   ├── espacio.routes.js
+    │   ├── estadoReserva.routes.js
+    │   ├── index.js
+    │   ├── reserva.routes.js
+    │   ├── tipoEspacio.routes.js
+    │   └── usuario.routes.js
+    ├── services/
+    │   ├── auth.service.js
+    │   ├── dashboard.service.js
+    │   ├── espacio.service.js
+    │   ├── estadoReserva.service.js
+    │   ├── reserva.service.js
+    │   ├── tipoEspacio.service.js
+    │   └── usuario.service.js
+    └── utils/
+        └── ApiError.js
+```
+
+> `node_modules/` se omite (son las dependencias que se instalan con `npm install`).
+
 ## Principio de diseño: KISS
 
 El proyecto sigue el principio **KISS** (Keep It Simple, Stupid), que establece que las soluciones deben mantenerse **tan simples como sea posible**, evitando complejidades innecesarias.
